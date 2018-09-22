@@ -10,6 +10,7 @@ import UIKit
 import MultipeerConnectivity
 
 class ViewController: UIViewController,MCSessionDelegate,MCBrowserViewControllerDelegate{
+    
 
     //表示するテキストデータの配列
     var textLabelList = [UILabel]()
@@ -81,6 +82,39 @@ class ViewController: UIViewController,MCSessionDelegate,MCBrowserViewController
         
         
     }
+    /*#######################################*/
+    //招待するためのブラウザを表示
+    /*#######################################*/
+    @IBAction func showBrowser(_ sender: UIButton) {
+        self.present(self.browser, animated: true, completion: nil)
+    }
+    
+    func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    /*#######################################*/
+    //セッションに関するコード
+    /*#######################################*/
+    //データを受け取った時
+    func session(_ session: MCSession,didReceive data: Data,fromPeer peerID: MCPeerID){
+    }
+    func session(_ session: MCSession,didStartReceivingResourceWithName resourceName: String,fromPeer peerID: MCPeerID,with progress: Progress){
+    }
+    func session(_ session: MCSession,didFinishReceivingResourceWithName resourceName: String,fromPeer peerID: MCPeerID,at localURL: URL?,withError error: Error?){}
+    func session(_ session: MCSession,didReceive stream: InputStream,withName streamName: String,fromPeer peerID: MCPeerID){}
+    func session(_ session: MCSession,peer peerID: MCPeerID,didChange state: MCSessionState){}
+
+    
+    
+    
+    
+    
+    
     
     
 
