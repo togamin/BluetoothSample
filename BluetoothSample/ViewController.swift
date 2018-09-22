@@ -7,14 +7,35 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
-class ViewController: UIViewController{
+class ViewController: UIViewController,MCSessionDelegate,MCBrowserViewControllerDelegate{
 
+    //表示するテキストデータの配列
     var textLabelList = [UILabel]()
+    
+    //Bluetooth通信をするにあたって
+    var session : MCSession!
+    var peerID: MCPeerID!
+    
+    //相手のデバイスを探す際に必要
+    let serviceType = "LCOC-Chat"//??
+    var browser : MCBrowserViewController!
+    var assistant : MCAdvertiserAssistant!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //自分のデバイス情報の設定
+        self.peerID = MCPeerID(displayName: UIDevice.current.name)
+        self.session = MCSession(peer: peerID)
+        self.session.delegate = self
+        
+        //接続可能な端末を探すためのブラウザを作成
+        self.browser = MCBrowserViewController(serviceType:serviceType,session:self.session)
+        self.browser.delegate = self
+        self.assistant = MCAdvertiserAssistant(serviceType:serviceType,discoveryInfo:nil, session:self.session)
+        self.assistant.start()
     }
     
     

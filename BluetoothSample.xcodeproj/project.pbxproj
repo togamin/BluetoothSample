@@ -12,6 +12,7 @@
 		B72A36EB2155D3E00099E193 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B72A36E92155D3E00099E193 /* Main.storyboard */; };
 		B72A36ED2155D3E40099E193 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B72A36EC2155D3E40099E193 /* Assets.xcassets */; };
 		B72A36F02155D3E40099E193 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B72A36EE2155D3E40099E193 /* LaunchScreen.storyboard */; };
+		B72A36F92156028F0099E193 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B72A36F82156028F0099E193 /* MultipeerConnectivity.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		B72A36EC2155D3E40099E193 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B72A36EF2155D3E40099E193 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B72A36F12155D3E40099E193 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B72A36F82156028F0099E193 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B72A36F92156028F0099E193 /* MultipeerConnectivity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +43,7 @@
 			children = (
 				B72A36E42155D3E00099E193 /* BluetoothSample */,
 				B72A36E32155D3E00099E193 /* Products */,
+				B72A36F72156028E0099E193 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +66,14 @@
 				B72A36F12155D3E40099E193 /* Info.plist */,
 			);
 			path = BluetoothSample;
+			sourceTree = "<group>";
+		};
+		B72A36F72156028E0099E193 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B72A36F82156028F0099E193 /* MultipeerConnectivity.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
