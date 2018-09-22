@@ -43,7 +43,7 @@ class ViewController: UIViewController,MCSessionDelegate,MCBrowserViewController
     //タッチした時の位置を取得し、その点にテキストを配置する。
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first! //このタッチイベントの場合確実に1つ以上タッチ点があるので`!`つけても可能。
-        let location = touch.location(in: self.view) //in: には対象となるビューを入れる。
+        var location = touch.location(in: self.view) //in: には対象となるビューを入れる。
         print("x座標：",location.x,",y座標：",location.y)//タッチした点の座標を表示。
         
         //アラートの設定
@@ -55,13 +55,26 @@ class ViewController: UIViewController,MCSessionDelegate,MCBrowserViewController
             /*#######################################*/
             //テキストラベルにアラート内で書いたラベルを挿入する。
             /*#######################################*/
-            var textLabel = UILabel()
+            let textLabel = UILabel()
             textLabel.text = alert.textFields![0].text!
             textLabel.frame = CGRect(x:location.x,y:location.y,width:100,height:20)
             
+            //相手にデータを送る
+            //送信したいデータをNSData型に変更
+            let dataText = textLabel.text?.data(using: String.Encoding.utf8,allowLossyConversion:false)
+            let dataX = NSData(bytes: &location.x, length: MemoryLayout<NSInteger>.size)
+            let dataY = NSData(bytes: &location.y, length: MemoryLayout<NSInteger>.size)
+            print("送信：",dataText!,dataX,dataY)
+            
+            
+            do {
+                try self.session.send(dataText as! Data ,toPeers:self.session.connectedPeers, with: MCSessionSendDataMode.reliable)
+            } catch {
+                print(error)
+            }
+            
+            
             self.textLabelList.append(textLabel)
-            print("textLabelList:",self.textLabelList)
-            print("textLabelListCount:",self.textLabelList.count)
             
             for text in self.textLabelList{
                 self.view.addSubview(text)
@@ -102,6 +115,13 @@ class ViewController: UIViewController,MCSessionDelegate,MCBrowserViewController
     /*#######################################*/
     //データを受け取った時
     func session(_ session: MCSession,didReceive data: Data,fromPeer peerID: MCPeerID){
+        DispatchQueue.main.async() {
+            
+            var dataText = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+            
+            print("受け取ったデータ：",dataText)
+            self.writeText(text:dataText! as String,x:200,y:200)
+        }
     }
     func session(_ session: MCSession,didStartReceivingResourceWithName resourceName: String,fromPeer peerID: MCPeerID,with progress: Progress){
     }
@@ -109,8 +129,18 @@ class ViewController: UIViewController,MCSessionDelegate,MCBrowserViewController
     func session(_ session: MCSession,didReceive stream: InputStream,withName streamName: String,fromPeer peerID: MCPeerID){}
     func session(_ session: MCSession,peer peerID: MCPeerID,didChange state: MCSessionState){}
 
-    
-    
+    /*#######################################*/
+    //テキストと位置情報からラベルを表示させる関数
+    /*#######################################*/
+    func writeText(text:String,x:Int,y:Int){
+        var getLabel = UILabel()
+        getLabel.text = text
+        getLabel.frame = CGRect(x:x,y:y,width:100,height:20)
+        textLabelList.append(getLabel)
+        for text in self.textLabelList{
+            self.view.addSubview(text)
+        }
+    }
     
     
     
